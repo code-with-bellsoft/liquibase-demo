@@ -43,7 +43,7 @@ jobs:
         uses: liquibase-github-actions/update@v4.32.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://localhost:5432/neurowatch
+          url: jdbc:postgresql://postgres:5432/neurowatch
           username: neurowatch_user
           password: mypassword
           headless: true
@@ -53,7 +53,7 @@ jobs:
         uses: liquibase-github-actions/rollback-sql@v4.32.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://localhost:5432/neurowatch
+          url: jdbc:postgresql://postgres:5432/neurowatch
           username: neurowatch_user
           password: mypassword
           headless: true
@@ -64,7 +64,7 @@ jobs:
         uses: liquibase-github-actions/update@v4.32.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://localhost:5432/neurowatch
+          url: jdbc:postgresql://postgres:5432/neurowatch
           username: neurowatch_user
           password: mypassword
           headless: true
