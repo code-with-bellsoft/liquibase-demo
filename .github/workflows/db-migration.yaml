@@ -29,6 +29,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Process Resources
+        shell: bash
+        run: |
+          ./mvnw process-resources
+
       - name: Validate changesets
         uses: liquibase-github-actions/validate@v4.32.0
         with:
