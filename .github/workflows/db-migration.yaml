@@ -35,30 +35,30 @@ jobs:
           ./mvnw process-resources
 
       - name: Validate changesets
-        uses: liquibase-github-actions/validate@v4.32.0
+        uses: liquibase-github-actions/validate@v4.27.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://postgres:5432/neurowatch
+          url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
           password: mypassword
           headless: true
           logLevel: INFO
 
       - name: Preview updateSQL (dry run)
-        uses: liquibase-github-actions/update@v4.32.0
+        uses: liquibase-github-actions/update@v4.27.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://postgres:5432/neurowatch
+          url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
           password: mypassword
           headless: true
           logLevel: INFO
 
       - name: Preview rollbackSQL (dry run of last changeSet)
-        uses: liquibase-github-actions/rollback-sql@v4.32.0
+        uses: liquibase-github-actions/rollback-sql@v4.27.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://postgres:5432/neurowatch
+          url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
           password: mypassword
           headless: true
@@ -66,10 +66,10 @@ jobs:
           tag: ''
 
       - name: Apply Liquibase migration
-        uses: liquibase-github-actions/update@v4.32.0
+        uses: liquibase-github-actions/update@v4.27.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://postgres:5432/neurowatch
+          url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
           password: mypassword
           headless: true
