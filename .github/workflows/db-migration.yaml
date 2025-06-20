@@ -29,17 +29,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'liberica'
-          java-version: '24'
-
-      - name: Set JAVA_HOME
-        run: |
-          echo "JAVA_HOME: $JAVA_HOME"
-          java --version
-
       - name: Validate changesets
         uses: liquibase-github-actions/validate@v4.32.0
         with:
