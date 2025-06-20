@@ -1,0 +1,83 @@
+name: Liquibase CI Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  liquibase-verify:
+    name: Verify and Migrate DB with Liquibase
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: neurowatch
+          POSTGRES_USER: neurowatch_user
+          POSTGRES_PASSWORD: mypassword
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'liberica'
+          java-version: '21'
+
+      - name: Validate changesets
+        uses: liquibase-github-actions/validate@v4.32.0
+        with:
+          changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
+          url: jdbc:postgresql://localhost:5432/neurowatch
+          username: neurowatch_user
+          password: mypassword
+          headless: true
+          logLevel: INFO
+
+      - name: Preview updateSQL (dry run)
+        uses: liquibase-github-actions/update@v4.32.0
+        with:
+          changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
+          url: jdbc:postgresql://localhost:5432/neurowatch
+          username: neurowatch_user
+          password: mypassword
+          headless: true
+          logLevel: INFO
+
+      - name: Preview rollbackSQL (dry run of last changeSet)
+        uses: liquibase-github-actions/rollback-sql@v4.32.0
+        with:
+          changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
+          url: jdbc:postgresql://localhost:5432/neurowatch
+          username: neurowatch_user
+          password: mypassword
+          headless: true
+          logLevel: INFO
+
+      - name: Apply Liquibase migration
+        uses: liquibase-github-actions/update@v4.32.0
+        with:
+          changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
+          url: jdbc:postgresql://localhost:5432/neurowatch
+          username: neurowatch_user
+          password: mypassword
+          headless: true
+          logLevel: INFO
+
+      - name:  Run tests
+        run: ./mvnw test
+
+      - name: Deploy app
+        if: success()
+        run: echo "Deploy your app here..."
