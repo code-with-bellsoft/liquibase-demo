@@ -1,0 +1,84 @@
+name: Liquibase CI Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  liquibase-verify:
+    name: Verify and Migrate DB with Liquibase
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: neurowatch
+          POSTGRES_USER: liquibase
+          POSTGRES_PASSWORD: liquibase
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'liberica'
+          java-version: '21'
+
+      - name: Install Liquibase CLI
+        run: |
+          curl -L https://github.com/liquibase/liquibase/releases/download/v4.25.1/liquibase-4.25.1.tar.gz | tar xz
+          sudo mv liquibase /usr/local/bin/liquibase
+
+      - name: Validate changesets
+        run: |
+          liquibase \
+            --url=jdbc:postgresql://localhost:5432/neurowatch \
+            --username=liquibase \
+            --password=liquibase \
+            --changeLogFile=src/main/resources/db/changelog/db.changelog-master.yaml \
+            validate
+
+      - name: Preview updateSQL (dry run)
+        run: |
+          liquibase \
+            --url=jdbc:postgresql://localhost:5432/neurowatch \
+            --username=liquibase \
+            --password=liquibase \
+            --changeLogFile=src/main/resources/db/changelog/db.changelog-master.yaml \
+            updateSQL
+
+      - name: Preview rollbackSQL (dry run of last changeSet)
+        run: |
+          liquibase \
+            --url=jdbc:postgresql://localhost:5432/neurowatch \
+            --username=liquibase \
+            --password=liquibase \
+            --changeLogFile=src/main/resources/db/changelog/db.changelog-master.yaml \
+            rollbackCountSQL 1
+
+      - name: Apply Liquibase migration
+        run: |
+          liquibase \
+            --url=jdbc:postgresql://localhost:5432/neurowatch \
+            --username=liquibase \
+            --password=liquibase \
+            --changeLogFile=src/main/resources/db/changelog/db.changelog-master.yaml \
+            update
+
+      - name:  Run tests
+        run: ./mvnw test
+
+      - name: Deploy app
+        if: success()
+        run: echo "Deploy your app here..."

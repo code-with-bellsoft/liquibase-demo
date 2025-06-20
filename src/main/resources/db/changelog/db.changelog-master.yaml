@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/001-create-tables.yaml
+  - include:
+      file: db/changelog/002-insert-sample-data.yaml
+  - include:
+      file: db/changelog/003-add-manufacturer.yaml
+  - include:
+      file: db/changelog/004-test-preconditions.yaml
+  - include:
+      file: db/changelog/005-test-rollbacks.yaml
+  - include:
+      file: db/changelog/20250619-152707049_changelog.yaml

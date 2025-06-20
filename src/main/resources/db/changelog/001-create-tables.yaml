@@ -1,0 +1,85 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: cyberjar
+      preConditions:
+        - dbms:
+            type: postgresql
+      changes:
+        - createTable:
+            tableName: civilian
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: legal_name
+                  type: VARCHAR(250)
+              - column:
+                  name: national_id
+                  type: VARCHAR(50)
+              - column:
+                  name: birth_date
+                  type: DATE
+              - column:
+                  name: criminal_record
+                  type: BOOLEAN
+              - column:
+                  name: under_surveillance
+                  type: BOOLEAN
+
+        - createTable:
+            tableName: cyberware
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(200)
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+              - column:
+                  name: version
+                  type: VARCHAR(50)
+
+        - createTable:
+            tableName: implant_session
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: civilian_id
+                  type: BIGINT
+              - column:
+                  name: cyberware_id
+                  type: BIGINT
+              - column:
+                  name: installed_at
+                  type: DATE
+              - column:
+                  name: installed_by
+                  type: VARCHAR(255)
+        - addForeignKeyConstraint:
+            baseTableName: implant_session
+            baseColumnNames: civilian_id
+            referencedTableName: civilian
+            referencedColumnNames: id
+            constraintName: fk_civilian
+        - addForeignKeyConstraint:
+            baseTableName: implant_session
+            baseColumnNames: cyberware_id
+            referencedTableName: cyberware
+            referencedColumnNames: id
+            constraintName: fk_cyberware

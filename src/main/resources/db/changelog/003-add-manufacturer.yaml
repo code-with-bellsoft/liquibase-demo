@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003
+      author: cyberjar
+      changes:
+        - addColumn:
+            tableName: cyberware
+            columns:
+              - column:
+                  name: manufacturer
+                  type: VARCHAR(150)
+                  defaultValue: "SynthForge"
+
+

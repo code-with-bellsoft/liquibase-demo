@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002
+      author: cyberjar
+      preConditions:
+        - dbms:
+            type: postgresql
+      changes:
+        - insert:
+            tableName: civilian
+            columns:
+              - column: { name: legal_name, value: "Aelita Fang" }
+              - column: { name: national_id, value: "IZ-0965437-BM" }
+              - column: { name: birth_date, value: "1999-08-30" }
+              - column: { name: criminal_record, value: "FALSE" }
+              - column: { name: under_surveillance, value: "FALSE" }
+
+        - insert:
+            tableName: cyberware
+            columns:
+              - column: { name: name, value: "OptiSight X3" }
+              - column: { name: type, value: "ocular" }
+              - column: { name: version, value: "SZ 3000" }
+
+        - insert:
+            tableName: implant_session
+            columns:
+              - column: { name: civilian_id, valueNumeric: 1 }
+              - column: { name: cyberware_id, valueNumeric: 1 }
+              - column: { name: installed_at, valueDate: "2025-06-15" }
+              - column: { name: installed_by, value: "MP-129854" }

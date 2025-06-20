@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005
+      author: cyberjar
+      preConditions:
+        - dbms:
+            type: postgresql
+        - not:
+            columnExists:
+              tableName: civilian
+              columnName: temp_notes
+      changes:
+        - addColumn:
+            tableName: civilian
+            columns:
+              - column:
+                  name: temp_notes
+                  type: VARCHAR(255)
+                  defaultValue: 'N/A'
+      rollback:
+        - dropColumn:
+            columnName: temp_notes
+            tableName: civilian

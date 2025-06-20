@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004
+      author: cyberjar
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            columnExists:
+              tableName: cyberware
+              columnName: type
+      changes:
+        - addColumn:
+            tableName: cyberware
+            columns:
+              - column:
+                  name: type
+                  type: VARCHAR(50)
+
