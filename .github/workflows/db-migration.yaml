@@ -33,7 +33,11 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'liberica'
-          java-version: '21'
+          java-version: '24'
+
+      - name: Set JAVA_HOME
+        run: |
+          echo "JAVA_HOME: $JAVA_HOME"
 
       - name: Validate changesets
         uses: liquibase-github-actions/validate@v4.32.0
