@@ -69,7 +69,7 @@
                 <version>4.27.0</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>
-                    <searchPath>/Users/catherine/work_bellsoft/projects/liquibase-demo/src/main/resources/db/changelog</searchPath>
+                    <searchPath>src/main/resources</searchPath>
                     <diffChangeLogFile>src/main/resources/db/changelog/${maven.build.timestamp}_changelog.yaml</diffChangeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/neurowatch</url>
