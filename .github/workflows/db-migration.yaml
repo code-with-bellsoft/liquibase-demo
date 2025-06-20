@@ -33,7 +33,7 @@ jobs:
         uses: liquibase-github-actions/validate@v4.32.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
-          url: jdbc:postgresql://neurowatch-db:5432/neurowatch
+          url: jdbc:postgresql://postgres:5432/neurowatch
           username: neurowatch_user
           password: mypassword
           headless: true
@@ -58,6 +58,7 @@ jobs:
           password: mypassword
           headless: true
           logLevel: INFO
+          tag: ''
 
       - name: Apply Liquibase migration
         uses: liquibase-github-actions/update@v4.32.0
