@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/001-create-tables.yaml
+      file: /src/main/resources/db/changelog/001-create-tables.yaml
   - include:
       file: db/changelog/002-insert-sample-data.yaml
   - include:
