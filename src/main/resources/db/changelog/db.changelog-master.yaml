@@ -9,5 +9,3 @@ databaseChangeLog:
       file: db/changelog/004-test-preconditions.yaml
   - include:
       file: db/changelog/005-test-rollbacks.yaml
-  - include:
-      file: db/changelog/20250619-152707049_changelog.yaml
