@@ -19,7 +19,6 @@ public class CivilianService {
         return civilianRepository.findAll();
     }
 
-
 }
 
 

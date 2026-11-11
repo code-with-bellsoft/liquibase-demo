@@ -1,0 +1,60 @@
+databaseChangeLog:
+- changeSet:
+    id: 1753371939076-7
+    author: catherine (generated)
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: serial_number
+            type: varchar(255)
+        tableName: cyberware
+- changeSet:
+    id: 1753371939076-1
+    author: catherine (generated)
+    changes:
+    - modifyDataType:
+        columnName: legal_name
+        newDataType: varchar(255)
+        tableName: civilian
+- changeSet:
+    id: 1753371939076-2
+    author: catherine (generated)
+    changes:
+    - modifyDataType:
+        columnName: manufacturer
+        newDataType: varchar(255)
+        tableName: cyberware
+- changeSet:
+    id: 1753371939076-3
+    author: catherine (generated)
+    changes:
+    - modifyDataType:
+        columnName: name
+        newDataType: varchar(255)
+        tableName: cyberware
+- changeSet:
+    id: 1753371939076-4
+    author: catherine (generated)
+    changes:
+    - modifyDataType:
+        columnName: national_id
+        newDataType: varchar(255)
+        tableName: civilian
+- changeSet:
+    id: 1753371939076-5
+    author: catherine (generated)
+    changes:
+    - modifyDataType:
+        columnName: type
+        newDataType: varchar(255)
+        tableName: cyberware
+- changeSet:
+    id: 1753371939076-6
+    author: catherine (generated)
+    changes:
+    - modifyDataType:
+        columnName: version
+        newDataType: varchar(255)
+        tableName: cyberware
+
