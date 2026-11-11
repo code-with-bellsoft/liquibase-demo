@@ -29,13 +29,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK 25
-        uses: actions/setup-java@v6
-        with:
-          distribution: liberica
-          java-version: '25'
-          cache: maven
-
       - name: Process Resources
         shell: bash
         run: |
@@ -85,6 +78,13 @@ jobs:
           password: ${{ secrets.DB_PASSWORD }}
           headless: true
           logLevel: INFO
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v6
+        with:
+          distribution: liberica
+          java-version: '25'
+          cache: maven
 
       - name: Run tests
         run: ./mvnw test
