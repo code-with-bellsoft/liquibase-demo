@@ -1,11 +1,11 @@
 databaseChangeLog:
   - include:
-      file: /src/main/resources/db/changelog/001-create-tables.yaml
+      file: db/changelog/001-create-tables.yaml
   - include:
-      file: /src/main/resources/db/changelog/002-insert-sample-data.yaml
+      file: db/changelog/002-insert-sample-data.yaml
   - include:
-      file: /src/main/resources/db/changelog/003-add-manufacturer.yaml
+      file: db/changelog/003-add-manufacturer.yaml
   - include:
-      file: /src/main/resources/db/changelog/004-test-preconditions.yaml
+      file: db/changelog/004-test-preconditions.yaml
   - include:
-      file: /src/main/resources/db/changelog/005-test-rollbacks.yaml
+      file: db/changelog/005-test-rollbacks.yaml

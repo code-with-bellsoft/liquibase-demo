@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.0</version>
+        <version>4.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -16,8 +16,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>24</maven.compiler.source>
-        <maven.compiler.target>24</maven.compiler.target>
+        <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd-HHmmssSSS</maven.build.timestamp.format>
@@ -29,8 +28,8 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-liquibase</artifactId>
         </dependency>
 
         <dependency>
@@ -42,18 +41,32 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.liquibase.ext</groupId>
-            <artifactId>liquibase-hibernate6</artifactId>
-            <version>4.27.0</version>
+            <artifactId>liquibase-hibernate7</artifactId>
+            <version>5.0.4</version>
         </dependency>
     </dependencies>
 
@@ -66,18 +79,18 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.27.0</version>
+                <version>5.0.4</version>
                 <configuration>
                     <changeLogFile>src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/db/changelog/${maven.build.timestamp}_changelog.yaml</diffChangeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/neurowatch</url>
                     <defaultSchemaName />
-                    <username>neurowatch_user</username>
-                    <password>mypassword</password>
+                    <username>${env.DB_USERNAME}</username>
+                    <password>${env.DB_PASSWORD}</password>
                     <referenceUrl>hibernate:spring:dev.cyberjar?dialect=org.hibernate.dialect.PostgreSQLDialect
                         &amp;hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-                        &amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+                        &amp;hibernate.implicit_naming_strategy=org.springframework.boot.hibernate.SpringImplicitNamingStrategy
                     </referenceUrl>
                 </configuration>
             </plugin>

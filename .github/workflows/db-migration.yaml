@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        image: postgres:18
         env:
           POSTGRES_DB: neurowatch
           POSTGRES_USER: neurowatch_user
-          POSTGRES_PASSWORD: mypassword
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Process Resources
         shell: bash
@@ -40,17 +40,17 @@ jobs:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
           url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
-          password: mypassword
+          password: ${{ secrets.DB_PASSWORD }}
           headless: true
           logLevel: INFO
 
       - name: Preview updateSQL (dry run)
-        uses: liquibase-github-actions/update@v4.27.0
+        uses: liquibase-github-actions/update-sql@v4.27.0
         with:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
           url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
-          password: mypassword
+          password: ${{ secrets.DB_PASSWORD }}
           headless: true
           logLevel: INFO
 
@@ -61,10 +61,9 @@ jobs:
           count: 1
           url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
-          password: mypassword
+          password: ${{ secrets.DB_PASSWORD }}
           headless: true
           logLevel: INFO
-
 
       - name: Apply Liquibase migration
         uses: liquibase-github-actions/update@v4.27.0
@@ -72,11 +71,11 @@ jobs:
           changelogFile: src/main/resources/db/changelog/db.changelog-master.yaml
           url: "jdbc:postgresql://postgres:5432/neurowatch"
           username: neurowatch_user
-          password: mypassword
+          password: ${{ secrets.DB_PASSWORD }}
           headless: true
           logLevel: INFO
 
-      - name:  Run tests
+      - name: Run tests
         run: ./mvnw test
 
       - name: Deploy app

@@ -1,16 +1,16 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:18
     container_name: neurowatch-db
     restart: always
     environment:
       POSTGRES_USER: neurowatch_user
-      POSTGRES_PASSWORD: mypassword
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set the DB_PASSWORD environment variable}
       POSTGRES_DB: neurowatch
     ports:
       - "5432:5432"
     volumes:
-      - neurowatch_db_data:/var/lib/postgresql/data
+      - neurowatch_db_data:/var/lib/postgresql
     networks:
       - neurowatch_net
 

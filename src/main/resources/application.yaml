@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/neurowatch
+    username: neurowatch_user
+    password: ${DB_PASSWORD} # read from an environment variable
+  jpa:
+    # Hibernate is disabled because Liquibase will manage schema
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
